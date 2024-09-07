@@ -8,11 +8,14 @@ public class Vector {
 
 	private final double deltax, deltay;
 	
+	
 	/**
 	 * Instantiates a new zero vector (no change).
 	 */
 	public Vector(){
-		// TODO
+		
+		deltax = 0.0;
+		deltay = 0.0;
 	}
 	
 	/**
@@ -22,7 +25,9 @@ public class Vector {
 	 * @param dy the initial deltay value
 	 */
 	public Vector(double dx, double dy){
-		// TODO
+		
+		this.deltax = dx;
+		this.deltay = dy;
 	}
 	
 	/**
@@ -31,7 +36,9 @@ public class Vector {
 	 * @param theta the angle to construct, in radians
 	 */
 	public Vector(double theta){
-		// TODO
+		
+		this.deltax = Math.cos(theta);
+		this.deltay = Math.sin(theta);
 	}
 	
 	/**
@@ -42,7 +49,10 @@ public class Vector {
 	 * @param q the second point
 	 */
 	public Vector(Point p, Point q){
-		// TODO
+		
+		this.deltax = q.x() - p.x();
+		this.deltay = q.y() - p.y();
+		
 	}
 	
 	/**
@@ -51,7 +61,8 @@ public class Vector {
 	 * @return the current deltax value
 	 */
 	public double dx(){
-		// TODO
+		
+		return this.deltax;
 	}
 	
 	/**
@@ -60,7 +71,8 @@ public class Vector {
 	 * @return the current deltay value
 	 */
 	public double dy(){
-		// TODO
+		
+		return this.deltay;
 	}
 	
 	/**
@@ -70,7 +82,11 @@ public class Vector {
 	 * @return the  translated point
 	 */
 	public Point move(Point p){
-		// TODO
+		
+		double newpointx =  p.x()+this.deltax;
+		double newpointy = p.y()+this.deltay;
+		return new Point(newpointx, newpointy);
+		
 	}
 	
 	/**
@@ -80,7 +96,11 @@ public class Vector {
 	 * @return the vector sum
 	 */
 	public Vector add(Vector v){
-		// TODO
+		
+		double newvectorx = v.deltax + this.deltax;
+		double newvectory = v.deltay + this.deltay;
+		return new Vector(newvectorx, newvectory);
+		
 	}
 	
 	/**
@@ -90,7 +110,9 @@ public class Vector {
 	 * @return the dot product
 	 */
 	public double dot(Vector v){
-		// TODO
+		
+		double ans = this.deltax * v.deltax + this.deltay * v.deltay;
+		return ans;
 	}
 	
 	/**
@@ -100,7 +122,10 @@ public class Vector {
 	 * @return the scaled vector
 	 */
 	public Vector scale(double s){
-		// TODO
+		
+		double scalex = s*this.deltax;
+		double scaley = s*this.deltay;
+		return new Vector(scalex,scaley);
 	}
 	
 	/**
@@ -109,7 +134,9 @@ public class Vector {
 	 * @return how long this vector is (never negative).
 	 */
 	public double magnitude(){
-		// TODO
+		
+		double square = deltax*deltax + deltay*deltay;
+		return Math.sqrt(square);
 	}
 	
 	/**
@@ -118,7 +145,11 @@ public class Vector {
 	 * @return a vector with the same angle but magnitude of one.
 	 */
 	public Vector normalize(){
-		// TODO
+		double mag = magnitude();
+		if (mag == 0) {
+			return new Vector(0,0);
+		}
+		return new Vector(deltax/mag , deltay/mag);
 	}
 	
 	/**
@@ -128,7 +159,10 @@ public class Vector {
 	 * @return the rotated vector
 	 */
 	public Vector rotate(double theta){
-		// TODO
+		
+		double xNew = deltax * Math.cos(theta)- deltay * Math.sin(theta);
+		double yNew = deltax * Math.sin(theta)+ deltay * Math.cos(theta);
+		return new Vector(xNew,yNew);
 	}
 	
 	/*
@@ -136,23 +170,32 @@ public class Vector {
 	 */
 	@Override
 	public String toString(){
-		// TODO
+	
+		return "<" + deltax + ","+ deltay + ">";
+		
 	}
 
 	/*
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
-	@Override
-	public boolean equals(Object o){
-		// TODO
-	}
+	 @Override 
+	    public boolean equals(Object o) {
+	    	if(o instanceof Vector)
+	    	{
+	    		Vector v = (Vector) o;
+	    		return(v.deltax==deltax) && (v.deltay==deltay);
+	    	}
+	    	else
+	    		return false;
+	    	
+	    }
 	
 	/*
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
 	public int hashCode(){
-		// TODO
+		return (int) (11*deltax + 19*deltay);
 	}
 
 	/**
