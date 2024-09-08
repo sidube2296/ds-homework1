@@ -77,17 +77,17 @@ public class Ball implements Cloneable {
 	 */
 	public void step(){
 		if (active == true){
-			double new_loc_dx = getMove().dx();
-			double new_loc_dy = getMove().dy();
-			new Point(this.location.x()+ new_loc_dx , this.location.x()+ new_loc_dy);
+			double new_loc_dx = move.dx();
+			double new_loc_dy = move.dy();
+			location = new Point(this.location.x()+ new_loc_dx , this.location.x()+ new_loc_dy);
 			}
 		else
 			{
-			Vector v = new Vector();
-			v.rotate(Math.PI/24);
+			
+			move = move.rotate(Math.PI/24);
+			
 			}
 	}
-	
 	
 	/**
 	 * Checks if ball is at or outside BOUNDS dimension and moving further out,
@@ -96,7 +96,21 @@ public class Ball implements Cloneable {
 	 * @param bounds dimension of area to check (all four walls), must not be null
 	 */
 	public void bounceWalls(Dimension bounds){
-		// TODO
+
+        if (location.x() - radius <= 0 && move.dx() < 0) {
+            move = new Vector(-move.dx(), move.dy());
+            
+        } else if (location.x() + radius >= bounds.width && move.dx() > 0) {
+            move = new Vector(-move.dx(), move.dy());
+            
+        }
+        if (location.y() - radius <= 0 && move.dy() < 0) {
+            move = new Vector(move.dx(), -move.dy());
+            
+        } else if (location.y() + radius >= bounds.height && move.dy() > 0) {
+            move = new Vector(move.dx(), -move.dy());
+           
+        }
 	}
 	
 	/**
@@ -107,13 +121,14 @@ public class Ball implements Cloneable {
 	 */
 	public boolean isColliding(Ball other){
 		
-		double dist = Math.sqrt((this.location.x()*other.location.x()-this.location.y()*other.location.y()));
+		double dx = other.location.x()-this.location.x();
+		double dy = other.location.y()-this.location.y();
+		double dist = Math.sqrt(dx*dx+dy*dy);
 		double sum_radius = (double) this.getRadius()+(double) other.getRadius();
 		if (dist <= sum_radius)
 		{
 			return true;
-		}
-		else
+		}else
 			return false;
 	}
 	
