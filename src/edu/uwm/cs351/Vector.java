@@ -146,10 +146,12 @@ public class Vector {
 	 */
 	public Vector normalize(){
 		double mag = magnitude();
-		if (mag == 0) {
+		if (mag == 0.0) {
 			return new Vector(0,0);
 		}
-		return new Vector(deltax/mag , deltay/mag);
+		double nor_x = deltax/mag;
+		double nor_y = deltay/mag;
+		return new Vector( nor_x, nor_y);
 	}
 	
 	/**
@@ -160,9 +162,12 @@ public class Vector {
 	 */
 	public Vector rotate(double theta){
 		
-		double xNew = deltax * Math.cos(theta)- deltay * Math.sin(theta);
-		double yNew = deltax * Math.sin(theta)+ deltay * Math.cos(theta);
-		return new Vector(xNew,yNew);
+		double newangle = theta + angle();
+		double xNew = Math.cos(newangle);
+		double yNew = Math.sin(newangle);
+		double org_mag=magnitude();
+		return new Vector(xNew,yNew).scale(org_mag);
+		
 	}
 	
 	/*
@@ -179,16 +184,28 @@ public class Vector {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	 @Override 
-	    public boolean equals(Object o) {
-	    	if(o instanceof Vector)
-	    	{
-	    		Vector v = (Vector) o;
-	    		return(v.deltax==deltax) && (v.deltay==deltay);
-	    	}
-	    	else
-	    		return false;
-	    	
+	 
+	 public boolean equals(Object o) {
+	        if (o == null) {
+	            return false;
+	        } 
+	        
+	        if (o instanceof Vector) {
+	            Vector v = (Vector) o;
+	            return (this == o) || (this.deltax == v.deltax && this.deltay == v.deltay);
+	        }
+
+	        return false;
 	    }
+//	    public boolean equals(Object o) {
+//		 
+//	     if(this == o) return true;
+//	     if(!(o instanceof Vector)) return false;
+//	     
+//	     Vector v = (Vector) o;
+//	     return this.deltax == v.deltax && this.deltay == v.deltay;
+//    	
+//	    }
 	
 	/*
 	 * @see java.lang.Object#hashCode()
