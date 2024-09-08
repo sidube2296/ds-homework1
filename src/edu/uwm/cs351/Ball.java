@@ -76,7 +76,16 @@ public class Ball implements Cloneable {
 	 * If ball is not active: rotates vector by Math.PI/24.
 	 */
 	public void step(){
-		// TODO
+		if (active == true){
+			double new_loc_dx = getMove().dx();
+			double new_loc_dy = getMove().dy();
+			new Point(location.x()+ new_loc_dx , location.x()+ new_loc_dy);
+			}
+		else
+			{
+			Vector v = new Vector();
+			v.rotate(Math.PI/24);
+			}
 	}
 	
 	
@@ -97,7 +106,8 @@ public class Ball implements Cloneable {
 	 * @return true if colliding
 	 */
 	public boolean isColliding(Ball other){
-		// TODO
+		double dist = Math.sqrt((other.x()-this.x()));
+		
 	}
 	
 	/**
@@ -142,6 +152,19 @@ public class Ball implements Cloneable {
 	 */
 	@Override
 	public Ball clone() {
-		return null; // TODO: cast the result of super.clone() (see textbook).
+		//clone a Location object 
+		Ball answer;
+		
+		try {
+			answer = (Ball) super.clone();
+		}
+		catch (CloneNotSupportedException e)
+		{
+			throw new RuntimeException
+			("This class does not implement Cloneable.");
+			}
+		return answer;
+		
+		// return null; // TODO: cast the result of super.clone() (see textbook).
 	}
 }
