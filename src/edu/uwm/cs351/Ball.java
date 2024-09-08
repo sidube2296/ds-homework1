@@ -79,7 +79,7 @@ public class Ball implements Cloneable {
 		if (active == true){
 			double new_loc_dx = getMove().dx();
 			double new_loc_dy = getMove().dy();
-			new Point(location.x()+ new_loc_dx , location.x()+ new_loc_dy);
+			new Point(this.location.x()+ new_loc_dx , this.location.x()+ new_loc_dy);
 			}
 		else
 			{
@@ -106,8 +106,15 @@ public class Ball implements Cloneable {
 	 * @return true if colliding
 	 */
 	public boolean isColliding(Ball other){
-		double dist = Math.sqrt((other.x()-this.x()));
 		
+		double dist = Math.sqrt((this.location.x()*other.location.x()-this.location.y()*other.location.y()));
+		double sum_radius = (double) this.getRadius()+(double) other.getRadius();
+		if (dist <= sum_radius)
+		{
+			return true;
+		}
+		else
+			return false;
 	}
 	
 	/**
@@ -165,6 +172,5 @@ public class Ball implements Cloneable {
 			}
 		return answer;
 		
-		// return null; // TODO: cast the result of super.clone() (see textbook).
 	}
 }
