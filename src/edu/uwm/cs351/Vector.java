@@ -176,9 +176,12 @@ public class Vector {
 	@Override
 	public String toString(){return "<" + deltax + ","+ deltay + ">";}
 
-	/*
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
+	 /**
+   	 * Compares the location of the point to another object for equality 
+   	 * 
+   	 * @param o an object with which this location is compared
+   	 * @return Return true if the other location’s coordinates are exactly the same
+   	 */
 	 @Override 
 	 
 	 public boolean equals(Object o) {
