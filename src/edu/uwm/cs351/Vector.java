@@ -8,7 +8,6 @@ public class Vector {
 
 	private final double deltax, deltay;
 	
-	
 	/**
 	 * Instantiates a new zero vector (no change).
 	 */
@@ -31,7 +30,7 @@ public class Vector {
 	}
 	
 	/**
-	 * Instantiates a new unit vector with specified angle.
+	 * Instantiates a new unit vector with specified angle θ(theta) in the format (cos θ, sin θ) by using Math function
 	 *
 	 * @param theta the angle to construct, in radians
 	 */
@@ -60,27 +59,23 @@ public class Vector {
 	 *
 	 * @return the current deltax value
 	 */
-	public double dx(){
-		
-		return this.deltax;
-	}
+	public double dx(){return this.deltax;}
 	
 	/**
 	 * Getter for deltay field.
 	 *
 	 * @return the current deltay value
 	 */
-	public double dy(){
-		
-		return this.deltay;
-	}
+	public double dy(){return this.deltay;}
 	
 	/**
 	 * Translates the parameter point by this vector.
-	 *
+	 * Calculated new points by adding x and y co-ordinate of the point to the deltax and deltay co-ordinates respectively.
+	 * 
 	 * @param p the point to translate
 	 * @return the  translated point
 	 */
+	
 	public Point move(Point p){
 		
 		double newpointx =  p.x()+this.deltax;
@@ -91,10 +86,12 @@ public class Vector {
 	
 	/**
 	 * Adds the parameter vector with this vector.
-	 *
+	 * Calculated new vectors by adding deltax and deltay co-ordinate of the vector to the deltax and deltay co-ordinates of current vector respectively.
+	 * 
 	 * @param v the vector to add
 	 * @return the vector sum
 	 */
+	
 	public Vector add(Vector v){
 		
 		double newvectorx = v.deltax + this.deltax;
@@ -105,6 +102,7 @@ public class Vector {
 	
 	/**
 	 * Takes the dot product of this vector and the parameter vector.
+	 * Calculated dot vectors by multiplying deltax and deltay co-ordinate of the vector to the deltax and deltay co-ordinates of current vector respectively.
 	 *
 	 * @param v the other vector
 	 * @return the dot product
@@ -117,6 +115,7 @@ public class Vector {
 	
 	/**
 	 * Scales this vector by the parameter.
+	 * Calculated new vectors by multiplying the constant value to the deltax and deltay co-ordinates of current vector respectively.
 	 *
 	 * @param s the constant to scale by
 	 * @return the scaled vector
@@ -146,9 +145,7 @@ public class Vector {
 	 */
 	public Vector normalize(){
 		double mag = magnitude();
-		if (mag == 0.0) {
-			return new Vector(0,0);
-		}
+		if (mag == 0.0) {return new Vector(0,0);}
 		double nor_x = deltax/mag;
 		double nor_y = deltay/mag;
 		return new Vector( nor_x, nor_y);
@@ -170,15 +167,14 @@ public class Vector {
 		
 	}
 	
-	/*
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString(){
+	/**
+   	 * Gets the string representation of the point in a format <deltax,deltay>
+   	 * 
+   	 * @return the deltax and deltay co-ordinate of the points
+   	 */
 	
-		return "<" + deltax + ","+ deltay + ">";
-		
-	}
+	@Override
+	public String toString(){return "<" + deltax + ","+ deltay + ">";}
 
 	/*
 	 * @see java.lang.Object#equals(java.lang.Object)
@@ -197,23 +193,15 @@ public class Vector {
 
 	        return false;
 	    }
-//	    public boolean equals(Object o) {
-//		 
-//	     if(this == o) return true;
-//	     if(!(o instanceof Vector)) return false;
-//	     
-//	     Vector v = (Vector) o;
-//	     return this.deltax == v.deltax && this.deltay == v.deltay;
-//    	
-//	    }
 	
-	/*
-	 * @see java.lang.Object#hashCode()
+	 /**
+	 * Gets the hashcode of the point with the formula : 11*dx +19*dy
+	 * 
+	 * @return the hashcode of the point
 	 */
+	 
 	@Override
-	public int hashCode(){
-		return (int) (11*deltax + 19*deltay);
-	}
+	public int hashCode(){return (int) (11*deltax + 19*deltay);}
 
 	/**
 	 * Compute the angle of this vector, in radians,
@@ -221,6 +209,7 @@ public class Vector {
 	 * 
 	 * @return the angle in range [0,2Pi)
 	 */
+	
 	public double angle() { 
 		double magn = magnitude();
 		if (magn == 0.0) return 0;
