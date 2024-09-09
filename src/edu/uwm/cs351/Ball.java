@@ -27,6 +27,7 @@ public class Ball implements Cloneable {
 	 * @param vector the initial vector
 	 * @param col the color
 	 */
+	
 	public Ball(Point loc, Vector vector, Color col){
 		location = loc;
 		radius = DEFAULT_RADIUS;
@@ -74,18 +75,18 @@ public class Ball implements Cloneable {
 	/**
 	 * If ball is active: moves location by the current movement.
 	 * If ball is not active: rotates vector by Math.PI/24.
+	 * 
+	 * Made a rotate() and move() call from vector class and updated the location and movement according to the condition satisfied
 	 */
+	
 	public void step(){
 		if (active == true){
-			double new_loc_dx = move.dx();
-			double new_loc_dy = move.dy();
-			location = new Point(this.location.x()+ new_loc_dx , this.location.x()+ new_loc_dy);
+			Point newpoint = move.move(location);
+			location = newpoint;
 			}
 		else
 			{
-			
 			move = move.rotate(Math.PI/24);
-			
 			}
 	}
 	
@@ -96,7 +97,8 @@ public class Ball implements Cloneable {
 	 * @param bounds dimension of area to check (all four walls), must not be null
 	 */
 	public void bounceWalls(Dimension bounds){
-
+		
+		//for horizontal movement of the ball i.e left-right walls 
         if (location.x() - radius <= 0 && move.dx() < 0) {
             move = new Vector(-move.dx(), move.dy());
             
@@ -104,6 +106,7 @@ public class Ball implements Cloneable {
             move = new Vector(-move.dx(), move.dy());
             
         }
+      //for horizontal movement of the ball i.e top-bottom movement of the ball 
         if (location.y() - radius <= 0 && move.dy() < 0) {
             move = new Vector(move.dx(), -move.dy());
             
@@ -119,6 +122,7 @@ public class Ball implements Cloneable {
 	 * @param other the other ball
 	 * @return true if colliding
 	 */
+	
 	public boolean isColliding(Ball other){
 		
 		double dx = other.location.x()-this.location.x();
@@ -138,6 +142,7 @@ public class Ball implements Cloneable {
 	 * 
 	 * @param other the other ball
 	 */
+	
 	public void bounce(Ball other){
 		Vector my_unit_normal = new Vector(location, other.getLoc()).normalize();
 		Vector other_unit_normal = new Vector(other.getLoc(), location).normalize();
@@ -159,6 +164,7 @@ public class Ball implements Cloneable {
 	 *
 	 * @param g the Graphics context on which to draw
 	 */
+	
 	public void draw(Graphics g){
 		g.setColor(color);
 		g.fillOval(location.intX() - radius, location.intY() - radius, radius * 2, radius * 2);
@@ -171,7 +177,12 @@ public class Ball implements Cloneable {
 	
 	/* Make a Ball with the same features as this ball.
 	 * @see java.lang.Object#clone()
+	 * 
+	 * Generate a copy of this location
+	 * 
+	 * @return Return value is a copy of the ball.
 	 */
+	
 	@Override
 	public Ball clone() {
 		//clone a Location object 
