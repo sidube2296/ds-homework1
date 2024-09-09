@@ -71,7 +71,7 @@ public class Point implements Cloneable{
     /**
    	 * Compares the location of the point to another object for equality 
    	 * 
-   	 * @param o an object with which this location is compared
+   	 * @param o an object with which this point is compared
    	 * @return Return true if the other point’s coordinates are exactly the same
    	 */
     
